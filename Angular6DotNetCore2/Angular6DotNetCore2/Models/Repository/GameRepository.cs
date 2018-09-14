@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Angular6DotNetCore2.Models.Context;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Angular6DotNetCore2.Models.Repository
@@ -21,9 +22,9 @@ namespace Angular6DotNetCore2.Models.Repository
             return document;
         }
 
-        public Task<Game> GetGame(string name)
+        public Task<Game> GetGame(string id)
         {
-            FilterDefinition<Game> filter = Builders<Game>.Filter.Eq(m => m.Name, name);
+            FilterDefinition<Game> filter = Builders<Game>.Filter.Eq(m => m.Id, id);
             return _context.Games.Find(filter).FirstOrDefaultAsync();
         }
 
@@ -38,9 +39,9 @@ namespace Angular6DotNetCore2.Models.Repository
 
             return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
         }
-        public async Task<bool> Delete(string name)
+        public async Task<bool> Delete(string id)
         {
-            FilterDefinition<Game> filter = Builders<Game>.Filter.Eq(m => m.Name, name);
+            FilterDefinition<Game> filter = Builders<Game>.Filter.Eq(m => m.Id, id);
             DeleteResult deleteResult = await _context.Games.DeleteOneAsync(filter);
 
             return deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0;

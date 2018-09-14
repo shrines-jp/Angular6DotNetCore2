@@ -74,6 +74,7 @@ namespace Angular6DotNetCore2
 
                 if (env.IsDevelopment())
                 {
+                    spa.Options.StartupTimeout = new System.TimeSpan(days: 0, hours: 0, minutes: 1, seconds: 30);
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });

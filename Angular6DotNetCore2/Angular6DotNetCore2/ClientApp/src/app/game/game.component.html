@@ -1,0 +1,26 @@
+<h1>Game Data</h1>
+
+<p>.NET Core 2.0からMONGODBを利用してもらえるデータを表示する</p>
+
+<p *ngIf="!games"><em>Loading...</em></p>
+
+<table class='table table-hover' *ngIf="games">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Developer</th>
+      <th>Publisher</th>
+      <th>Platforms</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let game of games">
+      <td>{{ game.id }}</td>
+      <td>{{ game.name }}</td>
+      <td>{{ game.developer }}</td>
+      <td>{{ game.publisher }}</td>
+      <td>{{ game.platforms }}</td>
+    </tr>
+  </tbody>
+</table>

@@ -6,6 +6,7 @@ using Angular6DotNetCore2.Models;
 using Angular6DotNetCore2.Models.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace Angular6DotNetCore2.Controllers
 {
@@ -28,9 +29,9 @@ namespace Angular6DotNetCore2.Controllers
         }
         // GET: api/Game/name
         [HttpGet("{name}", Name = "Get")]
-        public async Task<IActionResult> Get(string name)
+        public async Task<IActionResult> Get(string id)
         {
-            var game = await _gameRepository.GetGame(name);
+            var game = await _gameRepository.GetGame(id);
             if (game == null)
                 return new NotFoundResult();
             return new ObjectResult(game);
@@ -44,9 +45,9 @@ namespace Angular6DotNetCore2.Controllers
         }
         // PUT: api/Game/5
         [HttpPut("{name}")]
-        public async Task<IActionResult> Put(string name, [FromBody]Game game)
+        public async Task<IActionResult> Put(string id, [FromBody]Game game)
         {
-            var gameFromDb = await _gameRepository.GetGame(name);
+            var gameFromDb = await _gameRepository.GetGame(id);
             if (gameFromDb == null)
                 return new NotFoundResult();
             game.Id = gameFromDb.Id;
@@ -55,12 +56,12 @@ namespace Angular6DotNetCore2.Controllers
         }
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{name}")]
-        public async Task<IActionResult> Delete(string name)
+        public async Task<IActionResult> Delete(string id)
         {
-            var gameFromDb = await _gameRepository.GetGame(name);
+            var gameFromDb = await _gameRepository.GetGame(id);
             if (gameFromDb == null)
                 return new NotFoundResult();
-            await _gameRepository.Delete(name);
+            await _gameRepository.Delete(id);
             return new OkResult();
         }
     }
